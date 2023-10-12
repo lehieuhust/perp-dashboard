@@ -10,7 +10,6 @@ import { useWallet } from "./WalletContext";
 import { useUserAddress } from "./AddressContext";
 import useSSR from "use-ssr";
 import Avatar from "./common/Avatar";
-import ReferralBanner from "./ReferralBanner";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -20,7 +19,6 @@ export const navigation = [
   { label: "Dashboard", pathname: "/" },
   { label: "Account", pathname: "/account" },
   { label: "Address Book", pathname: "/address-book" },
-  { label: "Staking", pathname: "/staking" },
   { label: "Leaderboard", pathname: "/leaderboard" },
 ];
 
@@ -59,7 +57,6 @@ function Header({ title, isSmall, noPadding, isInvalid }) {
 
   return (
     <div className={`bg-gray-800 ${getClassName(isSmall, noPadding)}`}>
-      <ReferralBanner />
       <Disclosure
         as="nav"
         className="bg-gray-800 border-b border-gray-300 border-opacity-25 lg:border-none"

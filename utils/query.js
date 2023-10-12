@@ -235,26 +235,6 @@ export function getTopTenTraders(limit = 300) {
   }
   `;
 }
-export function getStakingDayDatas() {
-  return `query StakingDayData {
-    stakingDayDatas(first: 1000, orderBy: date, orderDirection: desc) {
-      totalStaked
-      totalUnstaked
-      totalWithdrawn
-      id
-      date
-    }
-  }`;
-}
-export function getStakingInfo() {
-  return `query StakingInfo {
-    perpStakingInfo(id: "1") {
-      totalStakedTokens
-      totalWithdrawnTokens
-      totalStakers
-    }
-  }`;
-}
 export function getUnlockedTokens() {
   let start = new Date();
   start.setUTCHours(start.getHours() - 5.5, 0, 0, 0);

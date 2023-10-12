@@ -33,7 +33,7 @@ export default function Home() {
             content="Analytics on all your Perpetual Protocol (PERP) trades. PerpTerminal assists traders to make more informed trading decisions by allowing access to various analytics."
           />
         </Head>
-        <Header title="Perp Exchange Overview" />
+        <Header title="Perpetual Exchange Overview" />
         <main className="-mt-40 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
           {data ? (
             <>

@@ -146,7 +146,7 @@ function SearchPanel() {
                   </h2>
                   <p className="mt-6 mx-auto max-w-2xl text-lg text-gray-200">
                     To check user activity, add an Ethereum address in the
-                    search box below. The address should start with 0x.
+                    search box below. The address should start with orai1.
                   </p>
                 </div>
                 <form
