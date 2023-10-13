@@ -50,8 +50,7 @@ function subscribeOnStream(
   lastDailyBar
 ) {
   const parsedSymbol = parseFullSymbol(symbolInfo.full_name);
-  // const channelString = `${parsedSymbol.fromSymbol}/${parsedSymbol.toSymbol}`;
-  const channelString = `ABC`; // TODO:
+  const channelString = `ORAI/USDT`;
   const handler = {
     id: subscriberUID,
     callback: onRealtimeCallback,

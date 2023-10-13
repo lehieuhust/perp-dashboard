@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
@@ -11,16 +11,11 @@ import "../utils/style.css";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const [initRPCDone, setInitRPCDone] = useState(false);
 
   addAmmInfo();
 
   useEffect(() => {
-    const init = async () => {
-      const RPC = process.env.NEXT_PUBLIC_RPC;
-      window.client = await SigningCosmWasmClient.connect(RPC);
-    };
-    init();
-
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
@@ -29,6 +24,16 @@ function MyApp({ Component, pageProps }) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
+  useEffect(() => {
+    const init = async () => {
+      const RPC = process.env.NEXT_PUBLIC_RPC;
+      window.client = await SigningCosmWasmClient.connect(RPC);
+      setInitRPCDone(true);
+    };
+    init();
+  }, []);
+
   return (
     <>
       <Head>
@@ -39,7 +44,7 @@ function MyApp({ Component, pageProps }) {
         ></meta>
       </Head>
       <ModalProvider>
-        <Component {...pageProps} />
+        {initRPCDone ? <Component {...pageProps} /> : null}
       </ModalProvider>
     </>
   );

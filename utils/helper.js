@@ -174,3 +174,51 @@ export async function addAmmInfo() {
 
 export const usdcIcon =
   "https://assets.trustwalletapp.com/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png";
+
+export const toDecimals = (num, decimals = 6, fixed = 0) => {
+  return Number((Number(num) * 10 ** Number(decimals)).toFixed(fixed));
+};
+
+export const getPaginationPosition = (positions) => {
+  if (positions.length > 0) {
+    const positionIds = positions.map((p) => p.positionId);
+    return Math.max(...positionIds) + 1;
+  }
+  return null;
+};
+
+export const formatDataPositionContract = (response, currentPair) => {
+  return response.map((position) => {
+    const fee = toDecimals(
+      Number(position.spread_fee) + Number(position.toll_fee),
+      -currentPair.price_decimal,
+      6
+    );
+    const margin = toDecimals(position.margin, -currentPair.price_decimal, 3);
+
+    return {
+      positionId: position.position_id,
+      blockTime: position.block_time,
+      symbol: currentPair.symbol,
+      margin: toDecimals(margin, 0, 6),
+      notional: toDecimals(position.notional, -currentPair.price_decimal, 3),
+      leverage: Number(position.notional) / Number(position.margin),
+      size: toDecimals(
+        Math.abs(Number(position.size)),
+        -currentPair.price_decimal,
+        currentPair.price_decimal
+      ),
+      fee: toDecimals(fee, 0, 6),
+      entryPrice: toDecimals(
+        position.entry_price,
+        -currentPair.price_decimal,
+        3
+      ),
+      side: position.side,
+      stopLoss: position.stop_loss,
+      takeProfit: position.take_profit,
+      trader: position.trader,
+      direction: position.direction === "add_to_amm" ? "OPEN" : "CLOSED",
+    };
+  });
+};

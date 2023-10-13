@@ -1,8 +1,8 @@
-import useAmmToName from "../hooks/useAmmToName";
 import fromUnixTime from "date-fns/fromUnixTime";
-import { getSmallNumber } from "../utils/helper";
 import { format } from "date-fns";
 import Link from "next/link";
+
+import { PnLComponent } from "./../components/PnLComponent";
 
 export default function Transactions({ heading = "", data }) {
   if (!data) return "Loading";
@@ -29,25 +29,17 @@ export default function Transactions({ heading = "", data }) {
 }
 
 function TBody(props) {
-  let { getNameFromAddress } = useAmmToName();
-
   return (
     <tbody className="bg-white divide-y divide-gray-200">
       <tr key={props.amm}>
         <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
-          <a
-            className="underline"
-            href={`https://blockscout.com/xdai/mainnet/tx/${props.transactionHash}`}
-            target="_blank"
-          >
-            {format(fromUnixTime(props.date), "Pp")}
-          </a>
+          {format(fromUnixTime(props.blockTime), "Pp")}
         </td>
         <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900">
-          {getNameFromAddress && getNameFromAddress(props.amm)}
+          {props.symbol}
         </td>
         <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
-          {props?.exchangedPositionSize < 0 ? (
+          {props?.side === "sell" ? (
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
               Short
             </span>
@@ -58,17 +50,29 @@ function TBody(props) {
           )}
         </td>
         <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
-          {"$ " + getSmallNumber(props.spotPrice)}
+          {props.direction}
         </td>
         <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
-          {getSmallNumber(props?.exchangedPositionSize.replace("-", ""))}
+          {props?.leverage}
         </td>
         <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
-          {(getSmallNumber(props?.fee) * 1000).toFixed(2)}
+          {Number(props?.size.toFixed(4))}
         </td>
 
         <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
-          <Link href={`/account/${props.trader}`}>
+          {Number(props?.margin.toFixed(4))}
+        </td>
+        <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
+          {Number(props?.entryPrice.toFixed(4))}
+        </td>
+
+        <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
+          {props?.entryPrice.toFixed(4)}
+          <PnLComponent />
+        </td>
+
+        <td className="px-6 py-3 whitespace-nowrap text-md text-gray-800">
+          <Link href={`https://scan.orai.io/account/${props.trader}`}>
             <a className="underline">
               {`${props.trader?.slice(0, 4)}......${props.trader?.slice(-5)}`}
             </a>
@@ -93,7 +97,7 @@ function THead() {
           scope="col"
           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
-          Asset
+          Symbol
         </th>
         <th
           scope="col"
@@ -105,19 +109,37 @@ function THead() {
           scope="col"
           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
+          Type
+        </th>
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Leverage
+        </th>
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Size
+        </th>
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
+          Initial Amount
+        </th>
+        <th
+          scope="col"
+          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+        >
           Entry Price
         </th>
         <th
           scope="col"
           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
-          Position Size
-        </th>
-        <th
-          scope="col"
-          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Volume
+          PNL(ROI%)
         </th>
         <th
           scope="col"

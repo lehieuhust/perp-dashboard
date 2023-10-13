@@ -24,10 +24,10 @@ const icons = {
 };
 
 export default function Stats(props) {
-  let [first, second, totalVolume] = calculateStats(props.data);
+  const [first, second, totalVolume] = calculateStats(props.data);
 
   if (!first) return <h1>Loading</h1>;
-  let info = Object.keys(first).reduce((acc, cv) => {
+  const info = Object.keys(first).reduce((acc, cv) => {
     acc = acc.concat({
       [cv]: first[cv],
       change: percentageDifference(first[cv], second[cv]),
@@ -37,7 +37,7 @@ export default function Stats(props) {
     return acc;
   }, []);
 
-  let statsInfo = [
+  const statsInfo = [
     {
       totalVolume,
       label: "Total Traded Volume",

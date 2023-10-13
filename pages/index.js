@@ -1,4 +1,5 @@
 import useSWR from "swr";
+
 import { getVolumeQuery } from "../utils/query";
 import { perpetualStatsFetcher } from "../utils/fetcher";
 import HeroChart from "../components/HeroChart";

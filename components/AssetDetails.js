@@ -4,7 +4,7 @@ import { ammLatestTransaction } from "../utils/query";
 import Transactions from "./Transactions";
 
 export default function AssetDetails({ asset }) {
-  let { data } = useSWR(
+  const { data } = useSWR(
     () => asset && ammLatestTransaction(asset),
     perpetualStatsFetcher
   );

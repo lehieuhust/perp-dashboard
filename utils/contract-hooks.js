@@ -6,20 +6,21 @@ import {
 const ENGINE_CONTRACT = process.env.NEXT_PUBLIC_ENGINE_CONTRACT;
 const VAMM_CONTRACT = process.env.NEXT_PUBLIC_VAMM_CONTRACT;
 
-const generateMsgGetPosition = ({ walletAddress, startAfter }) => {
-  const LIMIT = 25;
+export const LIMIT = 25;
 
-  return {
+const generateMsgGetPosition = ({ startAfter }) => {
+  const res = {
     positions: {
       vamm: VAMM_CONTRACT,
-      filter: {
-        trader: walletAddress,
-      },
-      start_after: startAfter,
+      filter: "none",
       order_by: 2,
       limit: LIMIT,
     },
   };
+
+  if (startAfter) res.positions.start_after = startAfter;
+
+  return res;
 };
 
 const useMarginTradingContract = () => {
@@ -28,10 +29,12 @@ const useMarginTradingContract = () => {
       window.client,
       ENGINE_CONTRACT
     );
+
     const data = await vammEngine.positions(
       generateMsgGetPosition({ startAfter }).positions
     );
-    console.log("data", data);
+
+    return data;
   };
 
   const getPositionById = async (positionId) => {
