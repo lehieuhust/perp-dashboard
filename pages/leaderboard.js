@@ -1,11 +1,8 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import Header from "../components/Header";
+import { useState } from "react";
 
 import Layout from "../components/Layout";
-import { useUserAddress } from "../components/AddressContext";
 import useAmms from "../hooks/useAmms";
-import TradingPairs from "../components/TradingPairs";
 import LeaderboardTable from "../components/leaderboard/LeaderboardTable";
 import LeaderboardHeader from "../components/leaderboard/LeaderboardHeader";
 import useSWRImmutable from "swr/immutable";
@@ -28,7 +25,6 @@ let tabs = {
 };
 
 export default function Leaderboard() {
-  let { address, setAddress } = useUserAddress();
   let [activeTab, setActiveTab] = useState("day");
   let { data: timestamps } = useSWRImmutable(
     getLastTimestamp,
@@ -53,12 +49,6 @@ export default function Leaderboard() {
   }, perpetualStatsFetcher);
 
   let [ammDetails] = useAmms();
-
-  useEffect(() => {
-    if (address.trim()) {
-      setAddress("");
-    }
-  }, []);
 
   return (
     <Layout>

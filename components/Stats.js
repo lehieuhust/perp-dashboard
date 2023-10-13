@@ -14,7 +14,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-let icons = {
+const icons = {
   volume: <ChartBarIcon className="h-4 w-4 text-white" aria-hidden="true" />,
   trades: <UserGroupIcon className="h-4 w-4 text-white" aria-hidden="true" />,
   fee: <ColorSwatchIcon className="h-4 w-4 text-white" aria-hidden="true" />,

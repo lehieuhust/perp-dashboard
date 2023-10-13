@@ -1,19 +1,26 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import "tailwindcss/tailwind.css";
+
+import { ModalProvider } from "../components/ModalContext";
 import { addAmmInfo } from "../utils/helper";
 import * as gtag from "../utils/gtag";
-
 import "../utils/style.css";
-import { ModalProvider } from "../components/ModalContext";
-import { UserAddressProvider } from "../components/AddressContext";
-import WalletProvider from "../components/WalletContext";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+
   addAmmInfo();
+
   useEffect(() => {
+    const init = async () => {
+      const RPC = process.env.NEXT_PUBLIC_RPC;
+      window.client = await SigningCosmWasmClient.connect(RPC);
+    };
+    init();
+
     const handleRouteChange = (url) => {
       gtag.pageview(url);
     };
@@ -31,13 +38,9 @@ function MyApp({ Component, pageProps }) {
           content="width=device-width, initial-scale=1"
         ></meta>
       </Head>
-      <UserAddressProvider>
-        <ModalProvider>
-          <WalletProvider>
-            <Component {...pageProps} />
-          </WalletProvider>
-        </ModalProvider>
-      </UserAddressProvider>
+      <ModalProvider>
+        <Component {...pageProps} />
+      </ModalProvider>
     </>
   );
 }

@@ -10,3 +10,16 @@
   border-right-color: transparent;
   animation: loader-rotate 1s linear infinite;
 }
+
+.chart-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-content {
+  height: 100%;
+  width: 100%;
+}

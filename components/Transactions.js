@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function Transactions({ heading = "", data }) {
   if (!data) return "Loading";
+
   return (
     <div className="">
       <h3 className="py-5 text-lg font-bold text-gray-700">{heading}</h3>

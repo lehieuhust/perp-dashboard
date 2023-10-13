@@ -9,7 +9,5 @@ export default function AssetDetails({ asset }) {
     perpetualStatsFetcher
   );
 
-  return (
-    <Transactions heading="Latest Transactions" data={data?.transactions} />
-  );
+  return <Transactions heading="Latest Positions" data={data?.transactions} />;
 }

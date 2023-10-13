@@ -28,6 +28,10 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script
+            async
+            src="/charting_library/charting_library.standalone.js"
+          ></script>
         </body>
       </Html>
     );
