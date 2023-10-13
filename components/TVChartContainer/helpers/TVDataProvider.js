@@ -85,13 +85,6 @@ export class TVDataProvider {
   }
 
   async getBars(pair, ticker, resolution, periodParams, shouldRefetchBars) {
-    console.log("getBars", {
-      pair,
-      ticker,
-      resolution,
-      periodParams,
-      shouldRefetchBars,
-    });
     try {
       const bars = await this.getTokenHistoryBars(
         pair,

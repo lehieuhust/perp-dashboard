@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { FAVORITES_INTERVAL } from "./helpers/constants";
 
 const dateFormat = new Intl.DateTimeFormat("en-US", {
@@ -13,8 +14,7 @@ const timeFormat = new Intl.DateTimeFormat("en-US", {
 });
 
 export function formatTVDate(date) {
-  const obj = dateFormat.formatToJson(date); // TODO:
-  return `${obj.day} ${obj.month} ${obj.year}`;
+  return dayjs(date).format("DD/MM/YYYY");
 }
 
 export function formatTVTime(date) {
